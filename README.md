@@ -28,11 +28,39 @@ Your browser will likely launch a window or tab for `http://localhost:3000` and 
 Bootstrapped React apps (using `create-react-app`) strip most environment variables with the exception of `NODE_ENV` and any variables that are prefixed with `REACT_APP_<your var>`. For this tutorial we will prefix all variables with `REACT_APP_` to work with the default install configuration.
 
 1. Add local ENV variables
-Add a `env.local` file with variables `REACT_APP_ENVIRONMENT` and `REACT_APP_TIMEZONE` and some values.
+Add a `.env.local` file with variables `REACT_APP_ENVIRONMENT` and `REACT_APP_TIMEZONE` and some values. (SEE: env.local example but name with `.` prefix and `.gitignore` will ignore)
 
 2. Add a `Config.js` file to centralize ENV variables for use in the application. For a larger application you may want to move this to a `lib/` folder.
 
 3. Print variable values on default `App.js` screen to confirm the application is using them.
 
+4. Verify application runs (using `npm start` as before)
 
+# Add Docker container
+If you tested the app above, and the values you set in your local environment appear, then proceed to package your app in a container.
 
+## Create Docker image and run script
+1. Add `Dockerfile` as example in this repository
+
+2. Add `run` script (this is the secret)
+Adding a separate script for the `CMD` of your `Dockerfile` allows you to inject the container's ENV params during `docker run ...`. If you build your React app in the `Dockerfile` it will not recognize the ENV variables you pass as arguments when you run it.
+
+## Build and run Docker image
+1. Build docker image
+```
+docker build -t myimage .
+```
+
+2. Run image and add ENV variables to container
+```
+docker run --name myapp -p 8080:5000 \
+-e REACT_APP_ENVIRONMENT=docker \
+-e REACT_APP_TIMEZONE=America/Pacific \
+--rm myimage
+```
+```
+
+3. Test that your app is running on port 8080 in local browser at http://localhost:8080 and you should see the default screen but the values match ENV variable values passed in your run command.
+
+# Congratulations
+If you made it this far, then you have successfully extending `create-react-app` to use environment variables and added a Docker image that allows you to configure your application dynamically to run anywhere!

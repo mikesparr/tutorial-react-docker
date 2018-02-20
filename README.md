@@ -45,6 +45,9 @@ If you tested the app above, and the values you set in your local environment ap
 2. Add `run` script (this is the secret)
 Adding a separate script for the `CMD` of your `Dockerfile` allows you to inject the container's ENV params during `docker run ...`. If you build your React app in the `Dockerfile` it will not recognize the ENV variables you pass as arguments when you run it.
 
+3. Set script permissions
+**IMPORTANT** `chmod +x run` to allow Docker to execute the script during the `CMD`. Alternatively you could add another layer to the `Dockerfile` and a `RUN chmod+x run` step.
+
 ## Build and run Docker image
 1. Build docker image
 ```

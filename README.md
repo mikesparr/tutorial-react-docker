@@ -61,7 +61,6 @@ docker run --name myapp -p 8080:5000 \
 -e REACT_APP_TIMEZONE=America/Pacific \
 --rm myimage
 ```
-```
 
 3. Test that your app is running on port 8080 in local browser at http://localhost:8080 and you should see the default screen but the values match ENV variable values passed in your run command.
 

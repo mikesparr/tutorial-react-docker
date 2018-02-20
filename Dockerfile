@@ -1,8 +1,5 @@
 FROM node:9.4
 
-# Override the base log level (info).
-ENV NPM_CONFIG_LOGLEVEL warn
-
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -15,6 +12,8 @@ RUN npm install -g serve
 # Copy source code to image
 COPY . .
 
+# Install dependencies
 RUN npm install
 
+# Build app and start server from script
 CMD ["/usr/src/app/run"]
